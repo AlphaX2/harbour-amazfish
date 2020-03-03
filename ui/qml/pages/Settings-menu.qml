@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Nemo.Configuration 1.0
+import uk.co.piggz.amazfish 1.0
 
 Page {
     id: page
@@ -13,6 +14,7 @@ Page {
     SilicaListView {
         id: column
 
+        anchors.horizontalCenter: parent.horizontalCenter
         width: page.width - 2*Theme.horizontalPageMargin
         height: parent.height
 
@@ -24,7 +26,8 @@ Page {
 
         delegate: ListItem {
 
-            contentHeight: Theme.itemSizeMedium
+            visible: checkFeature()
+            contentHeight: visible ? Theme.itemSizeMedium : 0
 
             Icon {
                 id: settingsIcon
@@ -51,6 +54,18 @@ Page {
                 }
                 else {
                     pageStack.push(Qt.resolvedUrl(url))
+                }
+            }
+
+            function checkFeature() {
+                if(name === qsTr("Alarms")) {
+                    return supportsFeature(DaemonInterface.FEATURE_WEATHER)
+                }
+                else if (name === qsTr("Weather")) {
+                    return supportsFeature(DaemonInterface.FEATURE_ALARMS)
+                }
+                else {
+                    return true
                 }
             }
         }

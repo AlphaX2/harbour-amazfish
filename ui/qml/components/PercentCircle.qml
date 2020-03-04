@@ -6,6 +6,7 @@ Rectangle {
 
     property double percent
     property int size
+    property real widthRatio
 
     color: "transparent"
     implicitWidth: size
@@ -19,7 +20,8 @@ Rectangle {
         radius: Math.max(width, height) / 2
         color: "transparent"
         border.color: Theme.secondaryColor
-        border.width: 12
+        border.width: width * widthRatio
+
     }
 
     Rectangle
@@ -31,7 +33,7 @@ Rectangle {
         radius: outerRing.radius
         color: "transparent"
         border.color: Theme.secondaryColor
-        border.width: 6
+        border.width: width * (widthRatio * 0.6)
 
         ConicalGradient
         {
@@ -46,12 +48,4 @@ Rectangle {
             }
         }
     }
-
-//    Text
-//    {
-//        id: progressLabel
-//        anchors.centerIn: parent
-//        color: Theme.highlightColor
-//        text: (percent * 100).toFixed() + "%"
-//    }
 }
